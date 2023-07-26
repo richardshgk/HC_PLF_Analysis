@@ -14,8 +14,13 @@ twelve = pd.read_excel(r'assets/PLF 2012-22/LG10CY12.xls')
 # Limit data to only Hamilton County 
 twelve = twelve[['Unnamed: 4']]
 twelve = twelve.iloc[10]
-# twelve.to_frame()
-# twelve.rename(index={'2012'})
+
+# print(twelve.index)
+
+# print(twelve.rename('2012'))
+
+# Add year lable for when combining later
+# twelve['Year'] = [2012]
 # print(twelve)
 
 # ------
@@ -31,6 +36,8 @@ thirteen = pd.read_excel(r'assets/PLF 2012-22/LG10CY13.xls')
 
 thirteen = thirteen[['Unnamed: 1']]
 thirteen = thirteen.iloc[40]
+
+# thirteen['Year'] = [2013]
 # print(thirteen)
 
 # ------- 2014
@@ -142,3 +149,13 @@ two = two.iloc[39]
 # print(two)
 
 # Combine into one dataframe
+plf = pd.concat([twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen, twenty, one, two], ignore_index=True)
+plf = plf.to_frame()
+plf = plf.set_axis(['Amount'], axis=1)
+years = pd.Series(['2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'])
+years = years.to_frame()
+years = years.set_axis(['Years'], axis=1)
+
+# plf_annuals = years.join(plf)
+
+# print(plf_annuals)
