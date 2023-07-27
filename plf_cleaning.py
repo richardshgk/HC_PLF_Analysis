@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 
 # Read Excel file in a dataframe
 twelve = pd.read_excel(r'assets/PLF 2012-22/LG10CY12.xls')
@@ -14,10 +13,6 @@ twelve = pd.read_excel(r'assets/PLF 2012-22/LG10CY12.xls')
 # Limit data to only Hamilton County 
 twelve = twelve[['Unnamed: 4']]
 twelve = twelve.iloc[10]
-
-# print(twelve.index)
-
-# print(twelve.rename('2012'))
 
 # Add year lable for when combining later
 # twelve['Year'] = [2012]
@@ -148,7 +143,7 @@ two = two[['Unnamed: 1']]
 two = two.iloc[39]
 # print(two)
 
-# Combine into one dataframe
+# Create one dataframe for all years, add lables for readability 
 plf = pd.concat([twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen, twenty, one, two], ignore_index=True)
 plf = plf.to_frame()
 plf = plf.set_axis(['Amount'], axis=1)
@@ -156,6 +151,8 @@ years = pd.Series(['2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019
 years = years.to_frame()
 years = years.set_axis(['Years'], axis=1)
 
-# plf_annuals = years.join(plf)
-
+plf_annuals = pd.concat([years, plf], axis=1)
 # print(plf_annuals)
+
+# Save as new file in assets folder
+plf_annuals.to_csv(r'assets/plf_annuals.csv', index = False)
