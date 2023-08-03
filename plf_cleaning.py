@@ -1,7 +1,17 @@
 import pandas as pd
 
-# Read Excel file in a dataframe
+"""
+This file shows how the "plf-annuals.csv" was generated from the annual Ohio Public Library Fund data, located in the "PLF 2012-22" subfolder.
+Each of the excel files is read in, the data for Hamilton County is located and saved to a variable. At the end of the file the variables are concatinated into one Series. They are then merdge with a Sereis of years for labeling, and the final database is exported as a csv to the assets folder, "plf_annuals.csv".
+This file does not need to be run in order to the analysis file, "chpl_plf_analysis.py". 
+"""
+
+# Read first Excel file in as a dataframe, naming the variable accouring to the report year
 twelve = pd.read_excel(r'assets/PLF 2012-22/LG10CY12.xls')
+
+"""
+These reports were formatted for printing and have multiple pairs of County : Amount in each row. So before we can save the dollar amount to a variable we must find and confrim Hamilton County's location in the dataset.
+"""
 
 # Find column and row names; confrim location of data
 # print(twelve.head)
@@ -10,17 +20,17 @@ twelve = pd.read_excel(r'assets/PLF 2012-22/LG10CY12.xls')
 # print(twelve.iloc[10]['Unnamed: 3'])
 # print(twelve.iloc[10]['Unnamed: 4'])
 
-# Limit data to only Hamilton County 
+# Limit data to only Hamilton County and save back to the variable 
 twelve = twelve[['Unnamed: 4']]
 twelve = twelve.iloc[10]
-
-# Add year lable for when combining later
-# twelve['Year'] = [2012]
 # print(twelve)
 
-# ------
+"""
+We will now repeat these same steps for the rest of the reports, years 2013-22. 
+"""
 
-# Repeat for 2013
+# ------ 2013
+
 thirteen = pd.read_excel(r'assets/PLF 2012-22/LG10CY13.xls')
 
 # print(thirteen.head)
@@ -31,8 +41,6 @@ thirteen = pd.read_excel(r'assets/PLF 2012-22/LG10CY13.xls')
 
 thirteen = thirteen[['Unnamed: 1']]
 thirteen = thirteen.iloc[40]
-
-# thirteen['Year'] = [2013]
 # print(thirteen)
 
 # ------- 2014
@@ -142,6 +150,8 @@ two = pd.read_excel(r'assets/PLF 2012-22/LG10CY22.xls')
 two = two[['Unnamed: 1']]
 two = two.iloc[39]
 # print(two)
+
+# ------- 
 
 # Create one dataframe for all years, add lables for readability 
 plf = pd.concat([twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen, twenty, one, two], ignore_index=True)
