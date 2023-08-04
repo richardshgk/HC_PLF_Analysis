@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.ticker as mtick
 import seaborn as sns
 
 # Read in data files
@@ -17,31 +16,50 @@ wifi = chpl["WiFi Usage YTD"]
 plf = plf_annuals["Amount"]
 year = plf_annuals["Year"]
 
+# chpl_totals = chpl.iloc[:,1:].sum()
+# chpl_totals = chpl_totals.squeeze()
+# print(type(chpl_totals))
+
 # Set overall seaborn and pyplot visuals
 sns.set()
 plt.style.use("ggplot")
 
-# plt.bar(year, plf)
+# Create subplots and set figure size
+fig, (ax1, ax2) = plt.subplots(2,1)
+fig.set_figheight(8.5)
+fig.set_figwidth(9)
 
-# plt.title('Ohio Public Library Funds by Year')
-# plt.xlabel('Calendar Year')
-# plt.ylabel('PLF Money Awarded in USD')
+# Create first horizontal bar chart showing Public Library Fund awarded to Hamilton County
+ax1.barh(year, plf)
 
-# Create horizontal bar chart comparing the use of services at CHPL
-plt.barh(year, visits)
-plt.barh(year, circ, left=visits)
-plt.barh(year, computers, left=visits+circ)
-plt.barh(year, wifi, left=visits+circ+computers)
+# Tick formatting
+ax1.ticklabel_format(style='plain')
+ax1.tick_params(axis='both', labelsize=10)
+ax1.tick_params(axis='x', labelrotation=45)
+ax1.set_yticks(ticks=year)
 
-# Legend and tick formatting 
-plt.legend(['Visits', 'Circulation', 'PC Usage', 'Wifi Usage'], title='Usage Type', fontsize=10, bbox_to_anchor=(1.0, 1.0), loc='upper left')
-plt.ticklabel_format(style='plain')
-plt.yticks(ticks=year, fontsize=10)
-plt.xticks(rotation=45, fontsize=10)
+ax1.set_title('Ohio Public Library Funds by Year', fontweight='bold')
+ax1.set_xlabel('Calendar Year', fontweight='bold', labelpad=5)
+ax1.set_ylabel('PLF Money Awarded in USD', fontweight='bold', labelpad=10)
+# ax1.bar_label(plf)
 
-plt.title('Cincinnati and Hamilton County Public Library Usage by Year', fontweight='bold')
-plt.ylabel('Calendar Year', fontweight='bold', labelpad=10)
-plt.xlabel('Instances of Sevices Used', fontweight='bold', labelpad=10)
+# Create second horizontal bar chart comparing the use of services at CHPL
+ax2.barh(year, visits)
+ax2.barh(year, circ, left=visits)
+ax2.barh(year, computers, left=visits+circ)
+ax2.barh(year, wifi, left=visits+circ+computers)
+
+# # Legend and tick formatting 
+ax2.legend(['Visits', 'Circulation', 'PC Usage', 'Wifi Usage'], title='Usage Type', fontsize=10, bbox_to_anchor=(1.0, 1.0), loc='upper left')
+ax2.ticklabel_format(style='plain')
+ax2.tick_params(axis='both', labelsize=10)
+ax2.tick_params(axis='x', labelrotation=45)
+ax2.set_yticks(ticks=year)
+
+ax2.set_title('Cincinnati and Hamilton County Public Library Usage by Year', fontweight='bold')
+ax2.set_ylabel('Calendar Year', fontweight='bold', labelpad=10)
+ax2.set_xlabel('Instances of Sevices Used', fontweight='bold', labelpad=10)
+# ax2.bar_label(chpl_totals)
 
 plt.tight_layout()
 
