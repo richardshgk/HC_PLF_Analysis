@@ -17,11 +17,17 @@ There is a "requirements.txt" file included in this repo for the ease of anyone 
 The easiest way to take advantage of the requirements file is to use a virtual enviroinment. I am including the basic steps to creat one using VENV, which is included in the python library.
 
 In the command line, change directory into the project folder and create the environment. 
-~~~ python -m venv plf_env ~~~
+~~~ 
+python -m venv plf_env 
+~~~
 Activate the virtual envrionment with the following:
-~~~ plf_env\Scripts\activate.bat ~~~
+```
+ plf_env\Scripts\activate.bat
+ ```
 You can now pip install the requirements file:
-~~~ pip install -r requirements.txt~~~
+~~~ 
+pip install -r requirements.txt
+~~~
 This will install the dependencies. 
 
 #### About the data: 
