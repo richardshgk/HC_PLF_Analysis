@@ -17,7 +17,7 @@ wifi = chpl["WiFi Usage YTD"]
 plf = plf_annuals["Amount"]
 year = plf_annuals["Year"]
 
-# Seaborn visuals
+# Set overall seaborn and pyplot visuals
 sns.set()
 plt.style.use("ggplot")
 
@@ -27,18 +27,22 @@ plt.style.use("ggplot")
 # plt.xlabel('Calendar Year')
 # plt.ylabel('PLF Money Awarded in USD')
 
+# Create horizontal bar chart comparing the use of services at CHPL
 plt.barh(year, visits)
 plt.barh(year, circ, left=visits)
 plt.barh(year, computers, left=visits+circ)
 plt.barh(year, wifi, left=visits+circ+computers)
 
-plt.legend(['Visits', 'Circulation', 'PC Usage', 'Wifi Usage'])
-plt.yticks(ticks=year)
+# Legend and tick formatting 
+plt.legend(['Visits', 'Circulation', 'PC Usage', 'Wifi Usage'], title='Usage Type', fontsize=10, bbox_to_anchor=(1.0, 1.0), loc='upper left')
+plt.ticklabel_format(style='plain')
+plt.yticks(ticks=year, fontsize=10)
+plt.xticks(rotation=45, fontsize=10)
 
+plt.title('Cincinnati and Hamilton County Public Library Usage by Year', fontweight='bold')
+plt.ylabel('Calendar Year', fontweight='bold', labelpad=10)
+plt.xlabel('Instances of Sevices Used', fontweight='bold', labelpad=10)
 
-plt.title('CHPL Usage by Year')
-plt.ylabel('Calendar Year')
-plt.xlabel('Instances of Sevices Used')
-# plt.yticks(np.arange(0, 30000000, step=))
+plt.tight_layout()
 
 plt.show()
