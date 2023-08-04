@@ -16,9 +16,7 @@ wifi = chpl["WiFi Usage YTD"]
 plf = plf_annuals["Amount"]
 year = plf_annuals["Year"]
 
-# chpl_totals = chpl.iloc[:,1:].sum()
-# chpl_totals = chpl_totals.squeeze()
-# print(type(chpl_totals))
+chpl_totals = chpl.sum(axis=1)
 
 # Set overall seaborn and pyplot visuals
 sns.set()
@@ -30,7 +28,7 @@ fig.set_figheight(8.5)
 fig.set_figwidth(9)
 
 # Create first horizontal bar chart showing Public Library Fund awarded to Hamilton County
-ax1.barh(year, plf)
+hor1 = ax1.barh(year, plf)
 
 # Tick formatting
 ax1.ticklabel_format(style='plain')
@@ -41,11 +39,11 @@ ax1.set_yticks(ticks=year)
 ax1.set_title('Ohio Public Library Funds by Year', fontweight='bold')
 ax1.set_xlabel('Calendar Year', fontweight='bold', labelpad=5)
 ax1.set_ylabel('PLF Money Awarded in USD', fontweight='bold', labelpad=10)
-# ax1.bar_label(plf)
+ax1.bar_label(hor1, labels=plf, label_type='center', color ='white', fmt='%.2f')
 
 # Create second horizontal bar chart comparing the use of services at CHPL
 ax2.barh(year, visits)
-ax2.barh(year, circ, left=visits)
+hor2=ax2.barh(year, circ, left=visits)
 ax2.barh(year, computers, left=visits+circ)
 ax2.barh(year, wifi, left=visits+circ+computers)
 
@@ -59,8 +57,8 @@ ax2.set_yticks(ticks=year)
 ax2.set_title('Cincinnati and Hamilton County Public Library Usage by Year', fontweight='bold')
 ax2.set_ylabel('Calendar Year', fontweight='bold', labelpad=10)
 ax2.set_xlabel('Instances of Sevices Used', fontweight='bold', labelpad=10)
-# ax2.bar_label(chpl_totals)
+ax2.bar_label(hor2, labels=chpl_totals, label_type='center', color ='white')
 
-plt.tight_layout()
+plt.tight_layout(h_pad=2.0)
 
 plt.show()
